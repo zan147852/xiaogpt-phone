@@ -1,0 +1,12 @@
+{
+  "hardware": "S12",
+  "model": "openai:deepseek-chat",
+  "api_base": "https://api.deepseek.com/v1",
+  "api_format": "chat",
+  "tts": "mi",
+  "stream": true,
+  "mute_xiaoai": true,
+  "keyword": ["帮我", "请"],
+  "start_conversation": "开始聊天",
+  "end_conversation": "结束聊天"
+}

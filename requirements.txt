@@ -1,0 +1,2 @@
+# Match the version validated on the reference Android phone.
+xiaogpt[locked]==3.24
