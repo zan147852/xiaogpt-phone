@@ -11,7 +11,9 @@
 | 查看记忆只有 5 条 | 播报的是最近 5 条；总数会同时读出，可按编号或唯一内容删除 |
 | 回答中间停顿 | 上游 TTS 的播放等待、小米控制往返或模型出句间隔均可能造成；保持短回答，网络稳定后再比较 |
 | 熄屏后不回答 | Termux 后台、省电策略和应用自启动权限需检查；输入 `xiaoai status`，必要时 `xiaoai start` |
-| 手机重启后不回答 | 当前不配置脚本开机自启，打开 Termux 执行 `xiaoai start` |
+| 手机重启后不回答 | 先 `xiaoai start` 恢复，再按安装指南配置 Termux:Boot；仅授予 Termux 自启动权限不够 |
+| 自启脚本已启用但没有运行 | 确认 Termux:Boot 同来源、安装后打开过、首次解锁完成，且系统允许其自启动；查看 `xiaoai autostart status` |
+| waiting_for_network / boot_network_timeout | 等待 Wi-Fi；超时后联网执行 `xiaoai start`。不会在断网时反复登录小米 |
 | 找不到 `xiaoai` | 安装没完成或当前不在 Termux；检查安装输出，修复错误后重试 |
 | `container ubuntu is not installed` | 容器名称是 `xiaogpt`，不是 `ubuntu` |
 | `--name` 不认识 | 升级到 PRoot-Distro 5.x，再运行安装器 |

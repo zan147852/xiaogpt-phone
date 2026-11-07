@@ -74,7 +74,34 @@ xiaoai configure
 
 MIUI 中建议将 Termux 省电策略设为无限制、允许应用自启动，并按系统实际情况保留后台。项目启动时申请 Termux 唤醒锁，停止时释放。请用长时间锁屏后的真实问答检查后台稳定性。
 
-**应用自启动权限不等于脚本开机自启。当前安装器不会配置开机脚本。** 手机重启后打开 Termux，输入 `xiaoai start`。
+**应用自启动权限不等于脚本开机自启。** 未配置下方开机入口时，手机重启后需要打开 Termux，输入 `xiaoai start`。
+
+## 开机自启
+
+1. 安装 [官方 Termux:Boot](https://github.com/termux/termux-boot)，来源与 Termux 必须一致。GitHub 版 Termux 配 GitHub 版插件，F-Droid 版配 F-Droid 版，签名不能混用；不要为换插件而卸载已有 Termux。
+2. 安装后**打开 Termux:Boot 一次**，解除 Android 的首次启动限制。
+3. 在 MIUI 等系统中，允许 Termux 和 Termux:Boot 的自启动／后台运行，按需将省电策略设为无限制。
+4. 在 Termux 中执行：
+
+```bash
+xiaoai autostart enable
+xiaoai autostart status
+```
+
+此命令只注册本项目的 `~/.termux/boot/20-xiaogpt`，不改其他启动脚本，不自动下载插件。
+开机入口最多等待网络 10 分钟才开始访问小米账号；网络等待只检测小米公开 TCP 端口，不发送凭证。
+联网后仍需按原流程通过账号接口；若网络超时，状态为 `boot_network_timeout`，联网后手动 `xiaoai start`。
+
+重启手机，**先解锁一次**，保持 Wi-Fi 可用，再试听问答。仅看到脚本存在不能证明系统会实际执行。
+若状态仍显示旧值，`xiaoai status` 会同时报告进程锁与开机阶段；脚本注册成功、模拟执行通过和真实重启通过是不同的验收结果。
+
+关闭下次开机自启：
+
+```bash
+xiaoai autostart disable
+```
+
+关闭不会停止当前问答；需要停用时再执行 `xiaoai stop`。升级会保留已注册的开机入口，但升级后要按提示启动或重启服务。
 
 ## 升级
 

@@ -15,7 +15,7 @@ def main():
     args = parser.parse_args()
     for path in [*ROOT.glob('app/*.py'), *ROOT.glob('tests/*.py'), *ROOT.glob('scripts/*.py')]:
         ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
-    tests = ['check-memory-local.py', 'check-memory-integration-local.py', 'speech-check.py']
+    tests = ['check-memory-local.py', 'check-memory-integration-local.py', 'speech-check.py', 'network-check.py']
     if args.full:
         tests += ['memory-check.py', 'conversation-check.py', 'runtime-check.py', 'assisted-input-check.py']
     env = dict(os.environ)

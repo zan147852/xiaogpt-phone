@@ -22,7 +22,7 @@
 | 自然人格 | 默认温和、简短、像家人聊天，可自行修改提示 |
 | 长期记忆 | “记住……”直接保存；发现明确偏好时先询问，确认后保存 |
 | 删除偏好 | 查看记忆、按内容或编号删除、二次确认清空 |
-| 手机常驻 | Termux 运行，支持启动、停止、状态和重启 |
+| 手机常驻 | Termux 运行，支持启动、停止、重启；可配合 Termux:Boot 开机启动 |
 | 原声与音色试听 | 默认小爱原声；可播放微软 Edge 固定样本进行对比 |
 
 本项目是在 [XiaoGPT](https://github.com/yihong0618/xiaogpt) 之上的手机部署与体验优化层。模型默认使用 DeepSeek，也支持通义千问及其他 HTTPS OpenAI 兼容接口。它依赖小米云端和模型 API，不能完全离线使用。
@@ -66,6 +66,10 @@ xiaoai stop       # 停止
 xiaoai restart    # 重启
 xiaoai help      # 查看全部命令
 ```
+
+手机重启会结束原进程。希望重启后自动恢复，请安装与 Termux 同来源的官方
+Termux:Boot，打开一次，再执行 `xiaoai autostart enable`；首次解锁并联网后才会启动。
+详见[开机自启](docs/installation.md#开机自启)。
 
 | 想做的事 | 对音箱说 |
 |---|---|

@@ -85,3 +85,4 @@ SH
 chmod 700 "$prefix_dir/bin/xiaoai"
 printf '\n安装完成。输入 xiaoai 打开菜单，首次使用选择“配置”。\n'
 printf '升级后输入 xiaoai start 启动；保留账号与记忆，公开语音偏好按当前版本更新。\n'
+printf '如需开机恢复，先安装并打开同来源 Termux:Boot，再输入 xiaoai autostart enable。\n'

@@ -63,5 +63,17 @@ xiaoai voice-sample
 | configuration_required | 需要完成向导 |
 | connection_failed / needs_attention | 接口、网络或配置需检查 |
 | stopped | 服务停止 |
+| waiting_for_network | 开机入口正在等待网络，最多 10 分钟 |
+| boot_network_timeout | 开机等待网络超时，联网后执行 xiaoai start |
 
 完成回答次数表示软件播报流程返回，不代表音箱一定出声；请以试听为准。
+
+## 开机启动命令
+
+```bash
+xiaoai autostart enable   # 需要已安装并打开官方 Termux:Boot
+xiaoai autostart status   # 查看脚本、插件和最近开机启动阶段
+xiaoai autostart disable  # 只关闭下次开机自启
+```
+
+手机重启后需要首次解锁，系统也必须允许插件自启动。不会绕过锁屏、MIUI 权限或系统后台限制。[配置步骤](installation.md#开机自启)
