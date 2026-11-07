@@ -17,7 +17,8 @@ def main():
         ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
     tests = ['check-memory-local.py', 'check-memory-integration-local.py', 'speech-check.py', 'network-check.py']
     if args.full:
-        tests += ['memory-check.py', 'conversation-check.py', 'runtime-check.py', 'assisted-input-check.py']
+        tests += ['memory-check.py', 'conversation-check.py', 'runtime-check.py',
+                  'assisted-input-check.py', 'recovery-check.py']
     env = dict(os.environ)
     env['PYTHONPATH'] = str(ROOT / 'app') + os.pathsep + env.get('PYTHONPATH', '')
     env['PYTHONIOENCODING'] = 'utf-8'

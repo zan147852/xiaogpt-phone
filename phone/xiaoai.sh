@@ -12,6 +12,12 @@ show_status() {
     printf '配置：'; cat "$task_dir/setup-status" 2>/dev/null || printf '尚未安装\n'
     printf '状态：'; cat "$task_dir/service-status" 2>/dev/null || printf '尚未启动\n'
     printf '完成回答：'; cat "$task_dir/completed-answers" 2>/dev/null || printf '0\n'
+    if [[ -r "$task_dir/last-poll-time" ]]; then
+        read -r poll_time < "$task_dir/last-poll-time"
+        if [[ $poll_time =~ ^[0-9]+$ ]]; then
+            printf '最近成功读取提问：%s 秒前\n' "$(( $(date +%s) - poll_time ))"
+        fi
+    fi
     if [[ -f "$task_dir/service.lock" ]]; then
         if (flock -n 9) 9>"$task_dir/service.lock"; then
             printf '进程锁：未占用（服务未运行）\n'
@@ -21,6 +27,7 @@ show_status() {
     fi
     bash "$task_dir/autostart.sh" status
     printf 'listening / listening_manual_wakeup 表示等待提问，每轮仍需唤醒词。\n'
+    printf 'checking_connection / reconnecting 表示正在验证或恢复提问连接。\n'
 }
 
 case ${1:-menu} in

@@ -13,7 +13,9 @@
 | 熄屏后不回答 | Termux 后台、省电策略和应用自启动权限需检查；输入 `xiaoai status`，必要时 `xiaoai start` |
 | 手机重启后不回答 | 先 `xiaoai start` 恢复，再按安装指南配置 Termux:Boot；仅授予 Termux 自启动权限不够 |
 | 自启脚本已启用但没有运行 | 确认 Termux:Boot 同来源、安装后打开过、首次解锁完成，且系统允许其自启动；查看 `xiaoai autostart status` |
-| waiting_for_network / boot_network_timeout | 等待 Wi-Fi；超时后联网执行 `xiaoai start`。不会在断网时反复登录小米 |
+| waiting_for_network / boot_network_timeout / network_timeout | 容器还不能连接小米或模型地址；确认 Wi-Fi 实际可访问互联网，必要时关闭再打开 Wi-Fi；超时后联网执行 `xiaoai start` |
+| checking_connection / reconnecting | 正在验证或恢复提问接口，临时断网会使用现有登录重试；查看最近成功读取提问的时间 |
+| 手机浏览器有网，服务仍不通 | IPv6 能用时，IPv4 或容器 DNS 仍可能不通；Wi-Fi 重新连接后再检查，勿通过反复登录解决网络问题 |
 | 找不到 `xiaoai` | 安装没完成或当前不在 Termux；检查安装输出，修复错误后重试 |
 | `container ubuntu is not installed` | 容器名称是 `xiaogpt`，不是 `ubuntu` |
 | `--name` 不认识 | 升级到 PRoot-Distro 5.x，再运行安装器 |
@@ -32,7 +34,11 @@ xiaoai check-stream
 
 `check-stream` 会发一次真实、简短的模型请求，可能产生少量费用；只报告时间统计，不输出正文。`voice-sample` 会播放固定公开样本，不改变日常音色。
 
-状态文件不等于进程存活保证。菜单会同时检查服务锁；若状态还写着 listening，但进程锁未占用，尝试 `xiaoai start`。
+菜单同时报告服务锁和最近成功读取提问的时间。成功读取接口才显示 `listening`；临时断网显示 `reconnecting` 并重试。
+若状态还写着 listening，但进程锁未占用，尝试 `xiaoai start`。长时间回答期间可能暂停提问轮询，时间变旧不一定代表断网。
+
+开发排查应通过 Termux 或 TermuxService 运行联网检查。ADB 的 `run-as com.termux` 在部分系统中与真实服务的联网行为不同，
+不能只凭它的 DNS / TCP 失败判定后台服务断网。自检不需要输出账号配置、请求正文或记忆。
 
 ## 提交问题前
 
